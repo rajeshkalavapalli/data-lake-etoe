@@ -125,3 +125,67 @@ If you are using us-east-1 region, you don’t need CreateBucketConfiguration.
 For other regions (like Mumbai ap-south-1), you must include it.
 
 Bucket names must be globally unique in AWS. If the name already exists, you’ll get an error.
+
+## 📂 Step 3: Create Folders and Upload Data to S3
+
+After creating the S3 bucket, the next step is to set up a **folder structure** and upload the generated data files.
+
+---
+
+### Create Folder Structure in S3
+
+```python
+# create folders 
+folders = ["raw/user/", "raw/transection/", "raw/event/"]
+
+for folder in folders:
+    s3.put_object(Bucket=Bucket_name, Key=folder)
+
+print("folders created successfully")
+```
+
+This will create three "folders" (actually prefixes in S3):
+
+* `raw/user/`
+* `raw/transection/`
+* `raw/event/`
+
+---
+
+### Upload Files into S3
+
+```python
+# upload files
+s3.upload_file(r"D:\data-lake-etoe\data\user.csv", 
+               "rajesh-datalake-5432", 
+               "raw/user/user.csv")
+
+s3.upload_file(r"D:\data-lake-etoe\data\transection.csv", 
+               "rajesh-datalake-5432", 
+               "raw/transection/transection.csv")
+
+s3.upload_file(r"D:\data-lake-etoe\data\events.json", 
+               "rajesh-datalake-5432", 
+               "raw/event/events.json")
+```
+
+---
+
+### ✅ What Happens Here
+
+* Creates a **`raw/` layer** inside the bucket.
+* Uploads:
+
+  * `user.csv` → stored in **raw/user/**
+  * `transection.csv` → stored in **raw/transection/**
+  * `events.json` → stored in **raw/event/**
+
+---
+
+### 📌 Why This Matters
+
+* Organizing data into layers (`raw/`, `processed/`, `analytics/`) is a **best practice** in data lake projects.
+* The **raw layer** keeps the original data exactly as generated.
+* Later steps can build **ETL pipelines** to process and move this data into other layers.
+
+---
