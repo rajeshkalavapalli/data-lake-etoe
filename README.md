@@ -92,3 +92,36 @@ user.csv
 transection.csv
 
 events.json
+
+🌩️ Step 2: Create an S3 Bucket
+
+After generating local data (CSV & JSON files), the next step is to create an AWS S3 bucket to store them.
+I used boto3 (AWS SDK for Python) to create the bucket.
+
+Code: Create S3 Bucket
+import boto3 
+
+# Connect to S3
+s3 = boto3.client('s3')
+
+# Bucket name
+Bucket_name = "rajesh-datalake-5432"
+
+# Create bucket
+s3.create_bucket(
+    Bucket=Bucket_name,
+    # If region is NOT us-east-1, uncomment below:
+    # CreateBucketConfiguration={
+    #     'LocationConstraint': 'ap-south-1'
+    # }
+)
+
+print(f"Bucket {Bucket_name} created successfully")
+
+Notes:
+
+If you are using us-east-1 region, you don’t need CreateBucketConfiguration.
+
+For other regions (like Mumbai ap-south-1), you must include it.
+
+Bucket names must be globally unique in AWS. If the name already exists, you’ll get an error.
