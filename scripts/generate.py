@@ -1,5 +1,5 @@
 import pandas as pd 
-import pandas as pd
+
 
 import random 
 import uuid
@@ -40,13 +40,14 @@ df_txn.to_csv(r"D:\data-lake-etoe\data\transection.csv", index=False)
 # events generate 
 
 events = []
-events_date = datetime(2025, 9, 22)
-for i in range(1,300):
+start_date = datetime(2025, 9, 22)
+
+for i in range(1, 300):
     events.append({
-        'event_id':str(uuid.uuid4()),
-        'user_id':random.randint(1,100),
-        'event_type':random.choice(['click', 'view','purchase','addtocart']),
-        'event_time' : (start_date+timedelta(random.randint(0,365))).isoformat()
+        'event_id': str(uuid.uuid4()),
+        'user_id': random.randint(1, 100),
+        'event_type': random.choice(['click', 'view', 'purchase', 'addtocart']),
+        'event_time': (start_date + timedelta(days=random.randint(0, 365))).isoformat()
     })
 
 df_event = pd.DataFrame(events)
