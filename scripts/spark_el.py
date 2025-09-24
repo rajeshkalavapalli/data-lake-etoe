@@ -17,3 +17,5 @@ merged_df = merged_df.withColumn("txn_category",when(merged_df. amount>250,"high
 
 revenue_country=merged_df.groupby("country").sum('amount')
 revenue_country.write.mode("overwrite").parquet("file:///D:/data-lake-etoe/data/revenue_country_spark.parquet")
+
+#new 
